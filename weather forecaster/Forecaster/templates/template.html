@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% if title %}
+    <title>{{title}}</title>
+{% else %}
+    <title>Weather Forcatser</title>
+{% endif %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+<style>
+body{background-image:URL('{{ url_for("static", filename="pictures/clouds.jpg") }}')}
+</style>
+</head>
+<body>
+<div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+<br>
+
+
+
+<div class="left-column">
+<h1>Welcome!</h1>
+<p>welcome to the weather forecaster.<br>
+Here you can view the weather for next couple<br>
+of days.</p>
+<br>
+<h2>How it works</h2>
+<p>This python app uses flask to create
+multiple web pages and connect them together.
+The forecast is sourced from bbc weather and
+uses web scraping in order to retrieve it.</p>
+<br>
+</div>
+
+
+
+<div class="mid-column">
+{% block content %}{% endblock %}
+</div>
+<div class="right-column">
+    <div class="links">
+        <a href="{{ url_for('home') }}">Home</a>
+    </div>
+    {% if current_user.is_authenticated %}
+        <div class="links">
+            <a href="{{ url_for('logout') }}">Logout</a><br>
+            <a href="{{ url_for('account') }}">Account</a>
+        </div>
+    {% else %}
+        <div class="links">
+            <a href="{{ url_for('login') }}">Login</a><br>
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

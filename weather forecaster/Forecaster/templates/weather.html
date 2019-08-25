@@ -1,0 +1,52 @@
+{% extends "template.html" %}
+{% block content %}
+    <script>
+    function show_today(){
+    document.getElementById('today').style.display="block";
+    document.getElementById('tomorow').style.display="none";
+    document.getElementById('coming_up').style.display="none"
+    }
+    function show_tomorow(){
+    document.getElementById('today').style.display="none";
+    document.getElementById('tomorow').style.display="block";
+    document.getElementById('coming_up').style.display="none"
+    }
+    function show_comingUp(){
+    document.getElementById('today').style.display="none";
+    document.getElementById('tomorow').style.display="none";
+    document.getElementById('coming_up').style.display="block"
+    }
+    </script>
+    {% if current_user.is_authenticated %}
+        <div class="forecast">
+            <h1>Weather Forecaster</h1>
+            <p>Date: {{ Date }}</p>
+            <section id="today">
+                <img src='{{ url_for("static", filename="pictures/field.jpg") }}'>
+                <h3>Today</h3>
+                {{ forecast["today"] }}
+            </section>
+            <section id="tomorow" style="display:none">
+                <img src='{{ url_for("static", filename="pictures/rain.jpg") }}'>
+                <h3>Tomorow</h3>
+                {{ forecast["tomorow"] }}
+            </section>
+            <section id="coming_up" style="display:none">
+                <img src='{{ url_for("static", filename="pictures/sunshine.jpg") }}'> 
+                <h3>Coming up</h3>
+                {{ forecast["coming up"] }}
+            </section>
+            <section class="options">
+                <ul>
+                    <li onclick=show_today()>Today</li>
+                    <li onclick=show_tomorow()>Tomorrow</li>
+                    <li onclick=show_comingUp()>Coming Up</li>
+                </ul>
+            </section>
+        </div>
+    {% else %}
+        <div>
+            <h1><a href="{{ url_for('login') }}">Login</a> to view forecast.</h1>
+        </div>
+    {% endif %}
+{% endblock content %}

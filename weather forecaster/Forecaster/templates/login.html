@@ -1,0 +1,54 @@
+{% extends "template.html" %}
+{% block content %}
+<div>
+    <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-field">
+        <legend>
+            Login
+        </legend>
+        <div class="form-input">
+            {{ form.email.label }}
+
+            {% if form.email.errors %}
+                {{ form.email.label }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {{ form.email(class="form-input") }}
+            {% else %}
+                {{ form.email(class="form-input") }}
+            {% endif %}
+
+        </div>
+        <div class="form-input">
+            {{ form.password.label }}
+
+            {% if form.password.errors %}
+                {{ form.password.label }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {{ form.password(class="form-input") }}
+            {% else %}
+                {{ form.password(class="form-input") }}
+            {% endif %}
+
+        </div>
+        <div class="form-input">
+            {{ form.submit(class="button") }}
+        </div>
+    </fieldset>
+    </form>
+    <small class="form-small">
+        Dont have an account? <a href="{{ url_for('register') }}">Sign up!</a>
+        <br>
+        <br>
+        Forgot password? <a href="{{ url_for('reset_request') }}">Click here!</a>
+    </small>
+</div>
+{% endblock content %}
